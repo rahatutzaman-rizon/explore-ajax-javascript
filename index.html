@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  font-family: Arial; 
+}
+
+.countries {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+.country {
+  padding: 15px; 
+  border-radius: 5px;
+  background: linear-gradient(to bottom right, #c6e3f7, #e25499); 
+  color: #444;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="countries">
+  <!-- Countries will be loaded here -->
+</div>
+
+<script>
+// Fetch country data from API  
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://restcountries.com/v2/all');
+
+xhr.onload = function() {
+  if(xhr.status === 200) { 
+    let countries = JSON.parse(xhr.responseText);
+    
+    // Insert countries HTML
+    let output = '';
+    countries.forEach(country => {
+      output += `
+        <div class="country">
+          <h2>${country.name}</h2>
+          <h4>${country.capital}</h4>
+        </div>
+      `;
+    });
+    
+    document.querySelector('.countries').innerHTML = output;
+  }
+}
+
+xhr.send();
+</script>
+
+</body>
+</html>
